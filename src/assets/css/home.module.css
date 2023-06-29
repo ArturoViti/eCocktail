@@ -1,0 +1,93 @@
+.landingImageContainer {
+    position: relative;
+    background-size: contain;
+    min-height: 100vh;
+    width: 100%;
+    background: url("/images/negroni.jpg") bottom;
+}
+
+.overlayLandingPage {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba( 0, 0, 0, .6 );
+    z-index: 1;
+}
+
+.titleLandingAnimation {
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    z-index: 2;
+    margin-top: 10rem;
+    margin-left: 10rem;
+
+    font-size: xxx-large;
+    color: whitesmoke;
+}
+
+.descriptionLandingAnimation {
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    z-index: 2;
+    margin-left: 10rem;
+
+    font-size: xx-large;
+    color: whitesmoke;
+}
+
+/** Animazione in intestazione */
+.titleLandingAnimation:last-of-type {
+    width:0;
+    animation: reveal 3s infinite;
+    animation-iteration-count: 1;
+}
+
+.descriptionLandingAnimation:last-of-type h2 {
+    animation: slidein 5s infinite;
+    animation-iteration-count: 1;
+}
+
+@keyframes slidein {
+    0%   { margin-left: -800px; }
+    20%  { margin-left: -800px; }
+    35%  { margin-left: 0; }
+    100% { margin-left: 0; }
+}
+
+@keyframes reveal {
+    0%   { opacity: 0; width: 0; }
+    20%  { opacity: 1; width: 0; }
+    30%  { width: 355px; }
+    80%  { opacity: 1; }
+    100% { opacity: 0; width: 355px; }
+}
+
+/** Ricerca e filtri cocktail */
+.headerSearch {
+    margin-left: 2rem;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.formContainer {
+    width: 20%;
+    margin-left: 1rem;
+    border: 3px solid;
+}
+
+.galleryContainer {
+    width: 80%;
+    margin-left: 3rem;
+}

@@ -1,0 +1,46 @@
+@font-face {
+    font-family: NunitoLight;
+    src: url('/fonts/Nunito/static/Nunito-Regular.ttf');
+}
+
+:root {
+    --blu1: #1D3461;
+    --blu2: #1F487E;
+    --bigRadius: 32px;
+    --mainFont: NunitoLight
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+
+    }
+}
+
+* {
+
+}
+
+html, body {
+    font-family: var(--mainFont);
+    margin: 0;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@media (prefers-color-scheme: dark) {
+
+}
