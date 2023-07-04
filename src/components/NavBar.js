@@ -6,7 +6,7 @@ import { useState } from "react";
 import useScrollDirection from "@/hooks/useScrollDirection";
 
 export default function NavBar() {
-    const [ whatIsClicked, setClicked ] = useState(0);
+    const [ whatIsClicked, setClicked ] = useState(-1);
     const status = ( useScrollDirection() === "down")  ? "sticky" : "absolute";
 
     return (

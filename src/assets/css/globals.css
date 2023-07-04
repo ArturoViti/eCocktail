@@ -6,8 +6,12 @@
 :root {
     --blu1: #1D3461;
     --blu2: #1F487E;
+    --blu3: #0d6efd;
     --bigRadius: 32px;
-    --mainFont: NunitoLight
+    --mediumRadius: 16px;
+    --smallRadius: 8px;
+    --mainFont: NunitoLight;
+    --shadow1: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,7 +21,7 @@
 }
 
 * {
-
+    font-family: var(--mainFont);
 }
 
 html, body {
@@ -27,18 +31,20 @@ html, body {
 
 ::-webkit-scrollbar {
     width: 10px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--blu2);
+    border-radius: var(--smallRadius);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--blu3);
 }
 
 @media (prefers-color-scheme: dark) {

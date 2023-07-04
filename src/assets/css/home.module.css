@@ -73,21 +73,109 @@
 
 /** Ricerca e filtri cocktail */
 .headerSearch {
-    margin-left: 2rem;
 }
 
-.mainContainer {
+/*.mainContainer {
     display: flex;
     flex-direction: row;
-}
+    margin-top: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}*/
 
 .formContainer {
-    width: 20%;
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.5rem;
+    margin-top: 1rem;
     margin-left: 1rem;
-    border: 3px solid;
+    margin-right: 1rem;
+
+    box-shadow: var(--shadow1);
+    border-radius: var(--bigRadius);
+
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
 }
 
 .galleryContainer {
-    width: 80%;
-    margin-left: 3rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.drinksContainer {
+    max-width: 1500px;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    justify-items: center;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: flex-start;
+
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.overlayImg {
+    opacity: 0;
+}
+
+.overlayImg:hover {
+    opacity: 100;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: flex-end;
+    height: fit-content;
+}
+
+.bookMarkIcon {
+    font-size: x-large;
+}
+
+
+@media only screen and (max-width: 1200px) {
+    .form {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: space-evenly;
+        flex-wrap: nowrap;
+    }
+
+    .headerContainer {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .paginationContainer {
+        overflow-x: scroll;
+        width: 100%;
+    }
 }
