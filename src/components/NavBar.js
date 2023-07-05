@@ -17,7 +17,7 @@ export default function NavBar() {
                     onClick={() => setClicked(0)}>
                 Esplora
             </Link>
-            <Link href="/randomCocktail"
+            <Link href={"/detailsCocktail?idDrink=-1"}
                   className={ (whatIsClicked === 1) ? styles.activeNavbarElement: styles.navBarElement }
                   onClick={() => setClicked(1)}>
                 Cocktail Casuale

@@ -1,5 +1,3 @@
-// noinspection JSUnresolvedVariable
-
 "use client"
 
 import React, {useEffect, useState} from 'react';
@@ -15,33 +13,43 @@ const URL_TIPOLOGY = "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=lis
 const URL_GLASS = "https://www.thecocktaildb.com/api/json/v1/1/list.php?g=list";
 const URL_INGR = "https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list";
 const URL_ALCHOLIC = "https://www.thecocktaildb.com/api/json/v1/1/list.php?a=list";
-
 let URL_DRINK_BY_LETTER = "https://www.thecocktaildb.com/api/json/v1/1/search.php";
 
 const Explore = () => {
-    const router = useRouter();
+    const router = useRouter()
 
+    /* State di caricamento dei filtri */
     const { data: dataTipology, isLoading: isLoadingTipology }  = useFetch(URL_TIPOLOGY);
     const { data: dataGlass, isLoading: isLoadingGlass }  = useFetch(URL_GLASS);
     const { data: dataIngr, isLoading: isLoadingIngr }  = useFetch(URL_INGR);
     const { data: dataAlchol, isLoading: isLoadingAlchol }  = useFetch(URL_ALCHOLIC);
 
+    /* Dati dei drink risultanti */
     const [ dataDrinks, setDrinks ]  = useState( [] );
-    const [ noCocktailFound, setNoCocktailFound ] = useState(false);
 
+    /* Stato del form e input di ricerca */
     const [ isSearchedByForm, setSearchByForm ] = useState(false);
     const [ filterItems, setFilterItems ] = useState(null);
     const [ drinkForm, setDrinkForm] = useState({ name: "", category: "", glass: "",
         ingredient: "", typeAlchol: ""
     });
-
     const [ filterLetter, setFilterLetter ] = useState("A");
 
+    /**
+     * Funzione che imposta i drink data una lettera come parametro
+     * @param letter
+     * @returns {Promise<void>}
+     */
     const getDataDrinksByLetter = async ( letter ) => {
         const response = await axios.get( URL_DRINK_BY_LETTER + "?f=" + letter );
         setDrinks( response.data );
     };
 
+    /**
+     * Metodo che imposta i drink date le informazioni del form
+     * @param drinkForm
+     * @returns {Promise<void>}
+     */
     const getDataDrinksByForm = async( drinkForm ) => {
         let url = "";
         if ( drinkForm.name !== "" )
@@ -62,24 +70,34 @@ const Explore = () => {
             if ( queryParams.length > 0 )
                 url += `?${queryParams.join("&")}`;
         }
-        console.log(url);
         const response = await axios.get( url );
         setDrinks( response.data );
-
     }
 
+    /**
+     * Metodo che gestisce il change degli input/select e setta i campi del form nello state
+     * @param e
+     */
     const handleChange = (e) => {
         const { name, value } = e.target;
         setDrinkForm({ ...drinkForm, [name]: value });
     };
 
-    function pageClicked( letter ) {
+    /**
+     * Metodo invocato al click sulla letter pagination, setta lo stato della lettera e fa la ricerca
+     * @param letter
+     */
+     const pageClicked = ( letter ) => {
         setSearchByForm(false);
         setFilterLetter( letter.text );
         getDataDrinksByLetter( letter.text ).then( r => {} );
     }
 
-    function handleSearch( event ) {
+    /**
+     * Legge il form e fa la submit per caricare i drink
+     * @param event
+     */
+    const handleSearch = ( event ) => {
         event.preventDefault();
         if ( drinkForm.category !== "" || drinkForm.glass !== "" || drinkForm.ingredient !== ""
                 || drinkForm.typeAlchol !== "" || drinkForm.name !== "" )
@@ -90,15 +108,25 @@ const Explore = () => {
         }
     }
 
-    function handleDetailDrink( idDrink ) {
-        router.push("/detailsCocktail?idDrink=" + idDrink);
-    }
+    /**
+     *  Metodo che dato l'idDrink porta alla schermata di dettaglio del drink
+     * @param idDrink
+     */
+    const handleDetailDrink = ( idDrink ) => {
+        router.push( '/detailsCocktail?idDrink=' + idDrink );
+    };
 
+    /**
+     * All'inizio del caricamento della pagina, i primi drink a essere caricati sono con la lettera A
+     */
     useEffect(() => {
         setFilterLetter( "A" );
         getDataDrinksByLetter("A" ).then( r => {} );
     }, [] );
 
+    /**
+     * Al cambiare dei drink risultati, viene cambiata la paginazione a seconda se cerco per form o per pagina
+     */
     useEffect(() => {
         // Se la lista dei coctail è vuota, genero tutti i filtri
         const alpha = Array.from( Array(26) ).map( (e, i) => i + 65 );
@@ -114,8 +142,6 @@ const Explore = () => {
         );
         setFilterItems( updatedAlphabet );
     }, [dataDrinks] );
-
-
 
     return (
         <div style={{ position: "relative", marginTop: "5rem" }}>

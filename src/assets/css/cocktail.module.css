@@ -1,0 +1,104 @@
+.detailsContainer {
+    position: relative;
+    margin-top: 5rem;
+    margin-left: 1rem;
+    margin-right: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.photoDrink {
+    width: inherit;
+    border-radius: var(--bigRadius);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Badge {
+    font-size: medium;
+}
+
+.ingrColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 12px;
+    padding-top: 12px;
+}
+
+.photoIngredient {
+    border-radius: var(--bigRadius);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.photoIngredient:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    background-color: rgba(31, 72, 169, 0.2);
+}
+
+.photoTagContainer {
+    width: 30rem;
+}
+
+.randomDrinkButton {
+    width: -webkit-fill-available;
+    margin-top: 3rem;
+}
+
+.infoContainer {
+    position: relative;
+    width: 45rem;
+}
+
+.loader {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+
+.ingrName {
+    text-align: center;
+}
+@media only screen and (max-width: 1200px) {
+    .photoTagContainer
+    {
+        width: 300px;
+    }
+
+    .detailsContainer
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .stackBadge {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .randomDrinkButton {
+        width: -webkit-fill-available;
+        margin-top: 1rem;
+    }
+
+    .infoContainer {
+        width: -webkit-fill-available;
+        margin-top: 3rem;
+    }
+}
