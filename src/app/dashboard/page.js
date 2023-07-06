@@ -2,17 +2,16 @@
 
 import React, {useEffect, useState} from 'react';
 import styles from  "../../assets/css/home.module.css";
-import {Button, Card, Form, ListGroup, Pagination, Spinner} from "react-bootstrap";
+import { Button, Card, Form, ListGroup, Pagination, Spinner } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useFetch from "@/hooks/useFetch";
 import axios from "axios";
-import { BsBookmarkStar } from "react-icons/bs";
+import { BsBookmarkStar, BsFillBookmarkStarFill } from "react-icons/bs";
+import { getBookmarkedDrinks } from "@/utils/localStorageFunctions"
 import { useRouter } from "next/navigation";
+import { URL_TIPOLOGY, URL_INGR, URL_GLASS, URL_ALCHOLIC } from "@/utils/constants"
 
-const URL_TIPOLOGY = "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list";
-const URL_GLASS = "https://www.thecocktaildb.com/api/json/v1/1/list.php?g=list";
-const URL_INGR = "https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list";
-const URL_ALCHOLIC = "https://www.thecocktaildb.com/api/json/v1/1/list.php?a=list";
+
 let URL_DRINK_BY_LETTER = "https://www.thecocktaildb.com/api/json/v1/1/search.php";
 
 const Explore = () => {
@@ -35,6 +34,9 @@ const Explore = () => {
     });
     const [ filterLetter, setFilterLetter ] = useState("A");
 
+    /* Preferiti */
+    const [ bookMarkedDrinks, setBookmarkDrinks ] = useState([]);
+
     /**
      * Funzione che imposta i drink data una lettera come parametro
      * @param letter
@@ -51,7 +53,7 @@ const Explore = () => {
      * @returns {Promise<void>}
      */
     const getDataDrinksByForm = async( drinkForm ) => {
-        let url = "";
+        let url;
         if ( drinkForm.name !== "" )
             url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkForm.name;
         else
@@ -90,7 +92,7 @@ const Explore = () => {
      const pageClicked = ( letter ) => {
         setSearchByForm(false);
         setFilterLetter( letter.text );
-        getDataDrinksByLetter( letter.text ).then( r => {} );
+        getDataDrinksByLetter( letter.text ).then( () => {} );
     }
 
     /**
@@ -104,7 +106,7 @@ const Explore = () => {
         {
             setFilterLetter( "" );
             setSearchByForm(true);
-            getDataDrinksByForm( drinkForm ).then( r => {} );
+            getDataDrinksByForm( drinkForm ).then( () => {} );
         }
     }
 
@@ -117,11 +119,35 @@ const Explore = () => {
     };
 
     /**
-     * All'inizio del caricamento della pagina, i primi drink a essere caricati sono con la lettera A
+     * Metodo di aggiunta/rimozione di drink dal local storage e toggle dello state
+     * @param idDrink
      */
+    const handleFavoriteDrink = (idDrink) => {
+        if ( !bookMarkedDrinks )
+        {
+            let arrayDrink = [];
+            arrayDrink.push(idDrink);
+            localStorage.setItem( 'bookmarkedDrinks', JSON.stringify(arrayDrink) );
+            setBookmarkDrinks(arrayDrink);
+        }
+        else
+        {
+            let updatedBookMarkedDrinks;
+            if ( bookMarkedDrinks.includes(idDrink) )
+                updatedBookMarkedDrinks = bookMarkedDrinks.filter((value) => value !== idDrink);
+            else
+                updatedBookMarkedDrinks = [...bookMarkedDrinks, idDrink];
+
+            setBookmarkDrinks( updatedBookMarkedDrinks );
+            localStorage.setItem( 'bookmarkedDrinks', JSON.stringify(updatedBookMarkedDrinks) );
+        }
+    };
+
+    /** All'inizio del caricamento della pagina, i primi drink a essere caricati sono con la lettera A */
     useEffect(() => {
         setFilterLetter( "A" );
-        getDataDrinksByLetter("A" ).then( r => {} );
+        getDataDrinksByLetter("A" ).then( () => {} );
+        setBookmarkDrinks( getBookmarkedDrinks() );
     }, [] );
 
     /**
@@ -253,7 +279,7 @@ const Explore = () => {
                     !dataDrinks.drinks ? ( <Spinner animation="border" variant="primary" /> )
                         : (
                             dataDrinks.drinks.sort((a, b) => a.strDrink.localeCompare(b.strDrink))
-                                .map( (drink, index) => {
+                                .map( (drink) => {
                                     return (
                                         <Card style={{ width: '14rem', borderRadius: "var(--mediumRadius)",
                                                 boxShadow: "var(--shadow1)" }} key={drink.idDrink}>
@@ -267,8 +293,12 @@ const Explore = () => {
                                                     Dettagli
                                                 </Button>
                                                 <Button variant="warning" key={drink.idDrink + 100}
-                                                        style={{ marginTop: "10rem" }}>
-                                                    <BsBookmarkStar className={styles.bookMarkIcon} />
+                                                        style={{ marginTop: "10rem" }}
+                                                        onClick={() => handleFavoriteDrink(drink.idDrink)}>
+                                                    { ( bookMarkedDrinks && bookMarkedDrinks.includes(drink.idDrink) ) ?
+                                                        <BsFillBookmarkStarFill className={styles.bookMarkIcon} />
+                                                        : <BsBookmarkStar className={styles.bookMarkIcon} />
+                                                    }
                                                 </Button>
 
                                             </Card.ImgOverlay>

@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import styles from  "../../assets/css/cocktail.module.css";
 import axios from "axios";
-import {Col, Container, Row, Spinner, Image, Button} from "react-bootstrap";
+import { Col, Container, Row, Spinner, Image, Button } from "react-bootstrap";
 import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { URL_DRINK_BASE } from "@/utils/constants"
 
-const URL_DRINK_BASE = "https://www.thecocktaildb.com/api/json/v1/1/";
 
 const DetailCocktail = () => {
     const [ dataDrinks, setDrinks ]  = useState( [] );
